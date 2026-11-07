@@ -11,8 +11,8 @@ application:
       backend: http://yamtrack:8000/
 services:
   yamtrack:
-    # upstream: ghcr.io/fuzzygrim/yamtrack:v0.26.3
-    image: ghcr.1ms.run/fuzzygrim/yamtrack:v0.26.3
+    # upstream: ghcr.io/fuzzygrim/yamtrack:0.26.3
+    image: ghcr.1ms.run/fuzzygrim/yamtrack:0.26.3
     environment:
       - TZ=Asia/Shanghai
       - SECRET={{ stable_secret "session_secret" }}
