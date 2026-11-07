@@ -23,8 +23,8 @@ services:
     depends_on:
       - yamtrack-redis
   yamtrack-redis:
-    # upstream: library/redis:8-alpine
-    image: docker.1ms.run/library/redis:8-alpine
+    # upstream: library/redis:8.10.3
+    image: docker.1ms.run/library/redis:8.10.3
     command: >-
       /bin/sh -c "redis-server --save \"\" --appendonly no"
 usage: |

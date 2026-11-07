@@ -10,24 +10,24 @@ update:
   allow_downgrade: false
   version_source:
     type: image
-    image: webhook-tester
+    image: ghcr.io/fuzzygrim/yamtrack
 build:
   toolchains: []
   run_buildscript: false
 images:
-  - id: webhook-tester
+  - id: yamtrack
     target: service
-    service: webhook-tester
-    source: tarampampam/webhook-tester
+    service: yamtrack
+    source: ghcr.io/fuzzygrim/yamtrack
     channel: stable
     sort: semver
-    tag_regex: ^[0-9]+[.][0-9]+[.][0-9]+$
+    tag_regex: ^v?[0-9]+[.][0-9]+[.][0-9]+$
     delivery:
       mode: mirror
       require_digest_match: true
   - id: redis
     target: service
-    service: redis
+    service: yamtrack-redis
     source: library/redis
     channel: stable
     sort: semver
@@ -43,5 +43,5 @@ stores:
     enabled: false
   private:
     enabled: false
-    name: Webhook Tester
+    name: Yamtrack
     skip_if_version_exists: true
