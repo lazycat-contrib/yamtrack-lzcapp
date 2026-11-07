@@ -1,0 +1,18 @@
+package: community.lazycat.app.yamtrack
+name: Yamtrack
+version: 0.26.3
+description: "Self-hosted media tracker for anime, manga, TV, movies, books and games, with AniList/Trakt/Simkl sync."
+min_os_version: "1.5.0"
+homepage: https://github.com/FuzzyGrim/Yamtrack
+author: FuzzyGrim
+license: AGPL-3.0
+permissions:
+  required:
+    - net.internet
+locales:
+  zh:
+    name: Yamtrack
+    description: "自托管媒体进度追踪器，聚合追踪动画/漫画/剧集/电影/书籍/游戏，支持与 AniList、Trakt、Simkl 同步。"
+  en:
+    name: Yamtrack
+    description: "Self-hosted media tracker for anime, manga, TV, movies, books and games, with AniList/Trakt/Simkl sync."

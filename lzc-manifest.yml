@@ -1,0 +1,46 @@
+application:
+  subdomain: yamtrack
+  multi_instance: false
+  # 自带账号体系（allauth 本地注册登录），按平台惯例使用 public_path 直连。
+  public_path:
+    - /
+  upstreams:
+    - location: /package-licenses/
+      backend: file:///lzcapp/pkg/content/licenses/
+    - location: /
+      backend: http://yamtrack:8000/
+services:
+  yamtrack:
+    # upstream: ghcr.io/fuzzygrim/yamtrack:v0.26.3
+    image: ghcr.1ms.run/fuzzygrim/yamtrack:v0.26.3
+    environment:
+      - TZ=Asia/Shanghai
+      - SECRET={{ stable_secret "session_secret" }}
+      - REDIS_URL=redis://yamtrack-redis:6379/0
+      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=http
+    binds:
+      - /lzcapp/var/db:/yamtrack/db
+    depends_on:
+      - yamtrack-redis
+  yamtrack-redis:
+    # upstream: library/redis:8-alpine
+    image: docker.1ms.run/library/redis:8-alpine
+    command: >-
+      /bin/sh -c "redis-server --save \"\" --appendonly no"
+usage: |
+  Yamtrack 是一个自托管的媒体进度追踪器，可聚合追踪
+  动画 / 漫画 / 剧集 / 电影 / 书籍 / 游戏 的观看与收藏进度，
+  支持与 AniList、Trakt、Simkl、MyAnimeList 等第三方服务同步。
+
+  使用方法：
+  1. 打开应用，首次使用点击 Sign Up 自行注册账号即可。
+  2. 在 Settings 里可绑定 AniList / Trakt / Simkl 等外部账号做进度同步
+     （需要用户自己去对应平台申请授权，非必需）。
+  3. 本包自带账号体系且有自助注册入口，按平台惯例使用 public_path
+     直接对外开放，由 Yamtrack 自己的登录页鉴权。
+
+  说明：
+  - 本包未做实机验证，功能以官方文档为准：
+    https://fuzzygrim.github.io/Yamtrack/
+  - 许可证 AGPL-3.0，随包分发，见 /package-licenses/。
+  - 数据（SQLite）持久化在 /lzcapp/var/db，Redis 仅作缓存不落盘。
